@@ -10,7 +10,8 @@ app.use('/', expenseRoutes);
 
 // connect to db
 mongoose
-    .connect(process.env.MONGO_URI as string)
+    // .connect(process.env.MONGO_URI as string)
+    .connect('mongodb://127.0.0.1:27017/Expense-Tracker')
     .then(() => {
         app.listen(port, () => {
             console.log(`Listening on port ${port}`);
