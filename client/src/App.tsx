@@ -1,3 +1,4 @@
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Login from './pages/Login';
@@ -7,7 +8,7 @@ const GlobalStyles = createGlobalStyle`
         font-family: 'Inter';
     }
 `;
-const App = () => {
+const App: React.FC = () => {
     return (
         <>
             <GlobalStyles />
