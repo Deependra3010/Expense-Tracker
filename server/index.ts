@@ -1,7 +1,7 @@
-const express = require('express');
+import express from 'express';
 const app = express();
-const expenseRoutes = require('./routes/expenseRoutes');
-const mongoose = require('mongoose');
+import expenseRoutes from './routes/expenseRoutes';
+import mongoose from 'mongoose';
 require('dotenv').config();
 
 const port = 5000;
@@ -10,15 +10,12 @@ app.use('/', expenseRoutes);
 
 // connect to db
 mongoose
-    .connect(process.env.MONGO_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-    })
+    .connect(process.env.MONGO_URI as string)
     .then(() => {
         app.listen(port, () => {
             console.log(`Listening on port ${port}`);
         });
     })
-    .catch((err) => {
+    .catch((err: Error) => {
         console.log(err);
     });

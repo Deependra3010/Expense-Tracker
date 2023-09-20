@@ -1,7 +1,30 @@
-const mongoose = require('mongoose');
+import mongoose, { Document } from 'mongoose';
 const Schema = mongoose.Schema;
 
-const expenseSchema = new Schema({
+interface IExpense extends Document {
+    title: string;
+    amount: number;
+    category:
+        | 'Food & Drinks'
+        | 'Shopping'
+        | 'Housing'
+        | 'Transportation'
+        | 'Vehicle'
+        | 'Life & Entertainment'
+        | 'Communication & PC'
+        | 'Financial Expense'
+        | 'Investments'
+        | 'Income'
+        | 'Others';
+    date: Date;
+    description: string;
+    time: string;
+    paymentType: 'Cash' | 'Debit Card' | 'Credit Card' | 'UPI';
+    status: 'Cleared' | 'Uncleared';
+    image: string;
+}
+
+const expenseSchema = new Schema<IExpense>({
     title: {
         type: String,
         required: true,
@@ -51,6 +74,6 @@ const expenseSchema = new Schema({
     },
 });
 
-module.exports = {
-    expenseSchema,
-};
+const Expense = mongoose.model<IExpense>('Expense', expenseSchema);
+
+export default Expense;

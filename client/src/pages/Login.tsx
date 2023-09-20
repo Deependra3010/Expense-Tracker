@@ -46,7 +46,7 @@ const LinkText = styled(Link)`
     color: ${colors.green};
     text-decoration: none;
 `;
-const Login = () => {
+const Login: React.FC = () => {
     return (
         <>
             <LoginImage>
