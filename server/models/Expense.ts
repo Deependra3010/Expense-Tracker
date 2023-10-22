@@ -1,7 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 const Schema = mongoose.Schema;
 
-interface IExpense extends Document {
+export interface IExpense extends Document {
     title: string;
     amount: number;
     category:
