@@ -1,10 +1,15 @@
-import mongoose, { Document } from 'mongoose';
-const Schema = mongoose.Schema;
+import mongoose, { Schema, Types } from 'mongoose';
 
-export interface IExpense extends Document {
-    title: string;
+export interface IAccount {
+    _id: string;
+    name: string;
+    balance: number;
+}
+export interface IExpense {
+    _id: string;
+    account: IAccount | Types.ObjectId;
     amount: number;
-    category:
+    category?:
         | 'Food & Drinks'
         | 'Shopping'
         | 'Housing'
@@ -17,16 +22,32 @@ export interface IExpense extends Document {
         | 'Income'
         | 'Others';
     date: Date;
-    description: string;
-    time: string;
-    paymentType: 'Cash' | 'Debit Card' | 'Credit Card' | 'UPI';
-    status: 'Cleared' | 'Uncleared';
-    image: string;
+    description?: string;
+    time?: string;
+    paymentType?: 'Cash' | 'Debit Card' | 'Credit Card' | 'UPI';
+    status?: 'Cleared' | 'Uncleared';
+    image?: string;
 }
 
-const expenseSchema = new Schema<IExpense>({
-    title: {
+export const accountSchema = new Schema<IAccount>({
+    name: {
         type: String,
+        required: true,
+        unique: true,
+    },
+    balance: {
+        type: Number,
+        default: 0,
+        required: true,
+    },
+});
+
+export const Account = mongoose.model<IAccount>('Account', accountSchema);
+
+const expenseSchema = new Schema<IExpense>({
+    account: {
+        type: Schema.Types.ObjectId,
+        ref: 'Account',
         required: true,
     },
     amount: {
@@ -74,6 +95,4 @@ const expenseSchema = new Schema<IExpense>({
     },
 });
 
-const Expense = mongoose.model<IExpense>('Expense', expenseSchema);
-
-export default Expense;
+export const Expense = mongoose.model<IExpense>('Expense', expenseSchema);

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { IExpense } from '@server/models/Expense';
+import { IAccount, IExpense } from '@server/models/Expense';
 
 interface recordProps {
     record: IExpense;
@@ -9,7 +9,7 @@ interface recordProps {
 const RecordCategory = styled.div`
     font-size: 16px;
 `;
-const RecordTitle = styled.div`
+const RecordAccount = styled.div`
     color: #666;
     font-size: 13px;
 `;
@@ -27,7 +27,7 @@ const Record: React.FC<recordProps> = ({ record }) => {
         <div className="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
             <div>
                 <RecordCategory>{record.category}</RecordCategory>
-                <RecordTitle>{record.title}</RecordTitle>
+                <RecordAccount>{(record.account as IAccount).name}</RecordAccount>
                 <RecordTime>{record.time}</RecordTime>
             </div>
             <div>
