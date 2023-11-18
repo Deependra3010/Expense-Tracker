@@ -1,11 +1,11 @@
-import express, { Request, Response } from 'express';
-import Expense from '../models/Expense';
+import { Request, Response } from 'express';
+import { Expense, IExpense } from '../models/Expense';
 import mongoose from 'mongoose';
 
 // Get expenses
 const getExpenses = async (req: Request, res: Response) => {
     try {
-        const expenses = await Expense.find({});
+        const expenses = await Expense.find<IExpense>({}).populate('account');
         res.status(200).json(expenses);
     } catch (error) {
         res.status(500).json({ error: 'Something went wrong while fetching expenses' });

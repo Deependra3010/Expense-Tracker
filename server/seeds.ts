@@ -1,71 +1,81 @@
 import mongoose from 'mongoose';
-import Expense, { IExpense } from './models/Expense';
+import { Expense, Account } from './models/Expense';
 
-mongoose
-    .connect('mongodb://127.0.0.1:27017/Expense-Tracker')
-    .then(() => {
+const seedDatabase = async () => {
+    try {
+        await mongoose.connect('mongodb://127.0.0.1:27017/Expense-Tracker');
         console.log('Connected to Mongo');
-    })
-    .catch((err) => console.error(err));
+        const accountsData = [
+            {
+                name: 'Account1',
+                balance: 1000,
+            },
+            {
+                name: 'Account2',
+                balance: 2000,
+            },
+        ];
+        const accounts = await Account.insertMany(accountsData);
 
-const expenseData: IExpense[] = [
-    {
-        title: 'title1',
-        amount: 10,
-        category: 'Shopping',
-        date: new Date(),
-        description: 'first Description',
-        time: new Date().toLocaleTimeString(),
-        paymentType: 'Cash',
-        status: 'Cleared',
-        image: 'tafdafdfdf',
-    } as IExpense,
-    {
-        title: 'title2',
-        amount: 10,
-        category: 'Shopping',
-        date: new Date(),
-        description: 'first Description',
-        time: new Date().toLocaleTimeString(),
-        paymentType: 'Cash',
-        status: 'Cleared',
-        image: 'tafdafdfdf',
-    } as IExpense,
-    {
-        title: 'title3',
-        amount: 10,
-        category: 'Shopping',
-        date: new Date(),
-        description: 'first Description',
-        time: new Date().toLocaleTimeString(),
-        paymentType: 'Cash',
-        status: 'Cleared',
-        image: 'tafdafdfdf',
-    } as IExpense,
-    {
-        title: 'title4',
-        amount: 10,
-        category: 'Shopping',
-        date: new Date(),
-        description: 'first Description',
-        time: new Date().toLocaleTimeString(),
-        paymentType: 'Cash',
-        status: 'Cleared',
-        image: 'tafdafdfdf',
-    } as IExpense,
-    {
-        title: 'title5',
-        amount: 10,
-        category: 'Shopping',
-        date: new Date(),
-        description: 'first Description',
-        time: new Date().toLocaleTimeString(),
-        paymentType: 'Cash',
-        status: 'Cleared',
-        image: 'tafdafdfdf',
-    } as IExpense,
-];
+        const expenseData = [
+            {
+                account: accounts[0]._id,
+                amount: 100,
+                category: 'Income',
+                date: new Date(),
+                description: 'first Description',
+                time: new Date().toLocaleTimeString(),
+                paymentType: 'Cash',
+                status: 'Cleared',
+            },
+            {
+                account: accounts[0]._id,
+                amount: 10,
+                category: 'Shopping',
+                date: new Date(),
+                description: 'first Description',
+                time: new Date().toLocaleTimeString(),
+                paymentType: 'Cash',
+                status: 'Cleared',
+            },
+            {
+                account: accounts[1]._id,
+                amount: 10,
+                category: 'Shopping',
+                date: new Date(),
+                description: 'first Description',
+                time: new Date().toLocaleTimeString(),
+                paymentType: 'Cash',
+                status: 'Cleared',
+            },
+            {
+                account: accounts[1]._id,
+                amount: 10,
+                category: 'Shopping',
+                date: new Date(),
+                description: 'first Description',
+                time: new Date().toLocaleTimeString(),
+                paymentType: 'Cash',
+                status: 'Cleared',
+            },
+            {
+                account: accounts[0]._id,
+                amount: 10,
+                category: 'Shopping',
+                date: new Date(),
+                description: 'first Description',
+                time: new Date().toLocaleTimeString(),
+                paymentType: 'Cash',
+                status: 'Cleared',
+            },
+        ];
 
-Expense.insertMany(expenseData)
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+        await Expense.insertMany(expenseData);
+    } catch (error) {
+        console.log(error);
+    } finally {
+        mongoose.disconnect();
+    }
+};
+
+seedDatabase();
