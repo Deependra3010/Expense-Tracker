@@ -1,11 +1,10 @@
-import { Request, Response } from 'express';
-import { Expense, IExpense } from '../models/Expense';
-import mongoose from 'mongoose';
+const { Expense } = require('../models/Expense');
+const mongoose = require('mongoose');
 
 // Get expenses
-const getExpenses = async (req: Request, res: Response) => {
+const getExpenses = async (req, res) => {
     try {
-        const expenses = await Expense.find<IExpense>({}).populate('account');
+        const expenses = await Expense.find({}).populate('account');
         res.status(200).json(expenses);
     } catch (error) {
         res.status(500).json({ error: 'Something went wrong while fetching expenses' });
@@ -13,7 +12,7 @@ const getExpenses = async (req: Request, res: Response) => {
 };
 
 // Get single expense
-const getExpense = async (req: Request, res: Response) => {
+const getExpense = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -32,7 +31,7 @@ const getExpense = async (req: Request, res: Response) => {
 };
 
 // Create an expense
-const createExpense = async (req: Request, res: Response) => {
+const createExpense = async (req, res) => {
     const expense = req.body;
 
     try {
@@ -44,7 +43,7 @@ const createExpense = async (req: Request, res: Response) => {
 };
 
 // Update an expense
-const updateExpense = async (req: Request, res: Response) => {
+const updateExpense = async (req, res) => {
     const { id } = req.params;
     const updated = req.body;
 
@@ -66,7 +65,7 @@ const updateExpense = async (req: Request, res: Response) => {
 };
 
 // Delete an expense
-const deleteExpense = async (req: Request, res: Response) => {
+const deleteExpense = async (req, res) => {
     const { id } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -83,4 +82,10 @@ const deleteExpense = async (req: Request, res: Response) => {
     }
 };
 
-export { getExpenses, getExpense, createExpense, updateExpense, deleteExpense };
+module.exports = {
+    getExpenses,
+    getExpense,
+    createExpense,
+    updateExpense,
+    deleteExpense,
+};
