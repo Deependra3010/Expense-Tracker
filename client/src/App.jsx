@@ -11,7 +11,7 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
-const App: React.FC = () => {
+const App = () => {
     return (
         <>
             <GlobalStyles />

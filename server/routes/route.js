@@ -1,7 +1,7 @@
-import express, { Request, Response } from 'express';
+const express = require('express');
 const router = express.Router();
 
-router.get('/', (req: Request, res: Response) => {
+router.get('/', (req, res) => {
     res.send(`Expense Tracker's Home Page`);
 });
 

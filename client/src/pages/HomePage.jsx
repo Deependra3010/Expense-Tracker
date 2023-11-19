@@ -51,7 +51,7 @@ const IncomeExpense = styled.span`
     font: 500 16px Inter;
 `;
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
     return (
         <>
             <div className="row">

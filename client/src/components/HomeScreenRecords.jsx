@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Record from './Record';
-import { IExpense } from '@server/models/Expense';
 
 const RecordsHeading = styled.span`
     color: #222;
@@ -13,8 +12,8 @@ const LightText = styled(Link)`
     font-size: 14px;
 `;
 
-const HomeScreenRecords: React.FC = () => {
-    const [records, setRecords] = useState<IExpense[]>([]);
+const HomeScreenRecords = () => {
+    const [records, setRecords] = useState([]);
     useEffect(() => {
         const fetchRecords = async () => {
             const response = await fetch('/api/expenses');

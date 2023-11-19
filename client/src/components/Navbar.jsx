@@ -70,9 +70,9 @@ const NavLogo = styled(Link)`
     margin-right: 130px;
 `;
 
-const Navbar: React.FC = () => {
-    const navRef = useRef<HTMLDivElement>(null);
-    const [showToggler, setShowToggler] = useState<Boolean>(false);
+const Navbar = () => {
+    const navRef = useRef(null);
+    const [showToggler, setShowToggler] = useState(false);
     const handleNavbar = () => {
         setShowToggler(!showToggler);
         navRef.current?.classList.toggle('responsiveNavbar');

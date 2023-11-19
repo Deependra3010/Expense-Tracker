@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import { Expense, Account } from './models/Expense';
+const mongoose = require('mongoose');
+const { Expense, Account } = require('./models/Expense');
 
 const seedDatabase = async () => {
     try {
