@@ -30,9 +30,12 @@ const HomeScreenRecords = () => {
                 <RecordsHeading>Transaction History</RecordsHeading>
                 <LightText to="/records">See all</LightText>
             </div>
-            {records.slice(0, 7).map((record) => (
-                <Record key={record._id} record={record} />
-            ))}
+            {records
+                .slice(-7)
+                .reverse()
+                .map((record) => (
+                    <Record key={record._id} record={record} />
+                ))}
         </>
     );
 };
