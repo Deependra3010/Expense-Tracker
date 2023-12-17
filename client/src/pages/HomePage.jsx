@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreenRecords from '../components/HomeScreenRecords';
+import ExpenseForm from '../components/ExpenseForm';
 
 const Gretting = styled.div`
-    color: #fff;
+    color: var(--white);
     background: linear-gradient(139deg, #429690 -4.35%, #2a7c76 100.15%);
     line-height: 1;
     width: 100%;
@@ -43,7 +44,7 @@ const AddExpenseBtn = styled.span`
     font-size: 4em;
     text-align: center;
     &:hover {
-        box-shadow: 0px 0px 5px #fff;
+        box-shadow: 0px 0px 5px var(--white);
     }
 `;
 const IncomeExpense = styled.span`
@@ -52,6 +53,14 @@ const IncomeExpense = styled.span`
 `;
 
 const HomePage = () => {
+    const [showForm, setShowForm] = useState(false);
+    const addExpenseHandler = () => {
+        setShowForm(true);
+    };
+    const closeExpenseForm = () => {
+        setShowForm(false);
+    };
+
     return (
         <>
             <div className="row">
@@ -77,13 +86,14 @@ const HomePage = () => {
                                 </div>
                             </div>
                         </BalanceCard>
-                        <AddExpenseBtn>+</AddExpenseBtn>
+                        <AddExpenseBtn onClick={addExpenseHandler}>+</AddExpenseBtn>
                     </Gretting>
                 </div>
                 <div className="col-md-6 pt-5">
                     <HomeScreenRecords />
                 </div>
             </div>
+            {showForm && <ExpenseForm onClose={closeExpenseForm} />}
         </>
     );
 };

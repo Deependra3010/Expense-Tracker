@@ -13,6 +13,11 @@ body {
     --gradientEnd: #3f8782;
     --grey: #aaaaaa;
     --iconGreen: #549994;
+    --lightGreenText: #438883;
+    --secondaryText: #666;
+    --white: #fff;
+    --incomeGreen: #25a969;
+    --incomeRed: #f95b51;
 }
 
 code {

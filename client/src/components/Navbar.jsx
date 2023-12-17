@@ -26,7 +26,7 @@ const NavItem = styled(Link)`
 const Nav = styled.div`
     position: fixed;
     z-index: 1056;
-    background-color: #fff;
+    background-color: var(--white);
     width: 100%;
     display: flex;
     align-items: center;
