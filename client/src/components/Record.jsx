@@ -5,15 +5,16 @@ const RecordCategory = styled.div`
     font-size: 16px;
 `;
 const RecordAccount = styled.div`
-    color: #666;
+    color: var(--secondaryText);
     font-size: 13px;
 `;
 const RecordAmount = styled.div`
-    color: ${(props) => (props.$recordCategory === 'Income' ? '#25a969' : '#F95B51')};
+    color: ${(props) =>
+        props.$recordCategory === 'Income' ? 'var(--incomeGreen)' : 'var(--incomeRed)'};
     font-size: 18px;
 `;
 const RecordTime = styled.div`
-    color: #666;
+    color: var(--secondaryText);
     font-size: 13px;
 `;
 

@@ -8,7 +8,7 @@ const RecordsHeading = styled.span`
     font-size: 18px;
 `;
 const LightText = styled(Link)`
-    color: #666;
+    color: var(--secondaryText);
     font-size: 14px;
 `;
 

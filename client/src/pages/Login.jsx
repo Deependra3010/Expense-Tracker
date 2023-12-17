@@ -24,7 +24,7 @@ const LoginText = styled.div`
 `;
 const LoginBtn = styled(Link)`
     border: none;
-    color: #fff;
+    color: var(--white);
     font-size: 18px;
     font-weight: 600;
     text-decoration: none;
