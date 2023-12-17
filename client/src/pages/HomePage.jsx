@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreenRecords from '../components/HomeScreenRecords';
 
 const Gretting = styled.div`
-    color: #fff;
+    color: var(--white);
     background: linear-gradient(139deg, #429690 -4.35%, #2a7c76 100.15%);
     line-height: 1;
     width: 100%;
@@ -43,7 +43,7 @@ const AddExpenseBtn = styled.span`
     font-size: 4em;
     text-align: center;
     &:hover {
-        box-shadow: 0px 0px 5px #fff;
+        box-shadow: 0px 0px 5px var(--white);
     }
 `;
 const IncomeExpense = styled.span`
