@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import HomeScreenRecords from '../components/HomeScreenRecords';
+import ExpenseForm from '../components/ExpenseForm';
 
 const Gretting = styled.div`
     color: var(--white);
@@ -52,6 +53,14 @@ const IncomeExpense = styled.span`
 `;
 
 const HomePage = () => {
+    const [showForm, setShowForm] = useState(false);
+    const addExpenseHandler = () => {
+        setShowForm(true);
+    };
+    const closeExpenseForm = () => {
+        setShowForm(false);
+    };
+
     return (
         <>
             <div className="row">
@@ -77,13 +86,14 @@ const HomePage = () => {
                                 </div>
                             </div>
                         </BalanceCard>
-                        <AddExpenseBtn>+</AddExpenseBtn>
+                        <AddExpenseBtn onClick={addExpenseHandler}>+</AddExpenseBtn>
                     </Gretting>
                 </div>
                 <div className="col-md-6 pt-5">
                     <HomeScreenRecords />
                 </div>
             </div>
+            {showForm && <ExpenseForm onClose={closeExpenseForm} />}
         </>
     );
 };
