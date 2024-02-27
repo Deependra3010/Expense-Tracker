@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import Record from './Record';
+import HomeScreenRecord from './HomeScreenRecord';
 
 const RecordsHeading = styled.span`
     color: #222;
@@ -34,7 +34,7 @@ const HomeScreenRecords = () => {
                 .slice(-7)
                 .reverse()
                 .map((record) => (
-                    <Record key={record._id} record={record} />
+                    <HomeScreenRecord key={record._id} record={record} />
                 ))}
         </>
     );
