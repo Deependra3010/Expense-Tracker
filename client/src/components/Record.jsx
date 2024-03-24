@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaEllipsisVertical } from 'react-icons/fa6';
+import ExpenseForm from './ExpenseForm';
 
 const RecordContainer = styled.div`
     margin-top: 10px;
@@ -15,9 +16,13 @@ const RecordAmount = styled.div`
 `;
 
 const Record = ({ record }) => {
+    const [showForm, setShowForm] = useState(false);
+    const toggleExpenseForm = () => {
+        setShowForm(!showForm);
+    };
     return (
         <>
-            <RecordContainer className="row" id={record._id}>
+            <RecordContainer className="row" id={record._id} onClick={toggleExpenseForm}>
                 <div className="col-3">{record.category}</div>
                 <div className="col-3">{record.account.name}</div>
                 <div className="col-3">{record.description}</div>
@@ -26,6 +31,9 @@ const Record = ({ record }) => {
                 </RecordAmount>
                 <FaEllipsisVertical className="col-1" />
             </RecordContainer>
+            {showForm && (
+                <ExpenseForm onClose={toggleExpenseForm} formType="Update" recordId={record._id} />
+            )}
         </>
     );
 };

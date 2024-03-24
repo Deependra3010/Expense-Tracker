@@ -108,6 +108,20 @@ const ExpenseForm = (props) => {
             }
         };
         fetchAccounts();
+        if (props.recordId) {
+            const fetchRecord = async () => {
+                const response = await fetch(`api/expenses/${props.recordId}`);
+                const json = await response.json();
+                if (response.ok) {
+                    console.log(json);
+                    debugger;
+                    json.date = json.date.substr(0, 10);
+                    json.time = json.time.substr(0, 5);
+                    setFormData(json);
+                }
+            };
+            fetchRecord();
+        }
     }, []);
     const [formData, setFormData] = useState({
         account: '',
@@ -129,13 +143,17 @@ const ExpenseForm = (props) => {
         const success = await addExpense(formData);
         if (success) {
             setFormData(emptyExpenseData);
+            props.onClose();
         }
     };
     const handleUpdate = async (ev) => {
         ev.preventDefault();
-        const success = await updateExpense(formData, props.id);
+        debugger;
+        const success = await updateExpense(formData, props.recordId);
         if (success) {
             setFormData(emptyExpenseData);
+            props.testing();
+            props.onClose();
         }
     };
     return (
