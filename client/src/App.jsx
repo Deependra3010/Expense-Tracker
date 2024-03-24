@@ -4,6 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 import Login from './pages/Login';
 import HomePage from './pages/HomePage';
 import Navbar from './components/Navbar';
+import RecordsPage from './pages/RecordsPage';
 
 const GlobalStyles = createGlobalStyle`
     body {
@@ -20,6 +21,7 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/home" element={<HomePage />} />
+                    <Route path="/records" element={<RecordsPage />} />
                 </Routes>
             </BrowserRouter>
         </>
