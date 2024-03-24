@@ -16,6 +16,18 @@ export const paymentType = ['UPI', 'Cash', 'Debit Card', 'Credit Card'];
 
 export const paymentStatus = ['Cleared', 'Uncleared'];
 
+export const emptyExpenseData = {
+    account: '',
+    amount: '',
+    category: '',
+    description: '',
+    date: '',
+    time: '',
+    paymentType: '',
+    status: '',
+    invoice: '',
+};
+
 export function getDate() {
     const curr = new Date();
     curr.setDate(curr.getDate() + 3);
