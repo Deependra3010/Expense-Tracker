@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FaCirclePlus, FaXmark } from 'react-icons/fa6';
 import {
     categories,
+    emptyExpenseData,
     getDate,
     getTime,
     paymentStatus,
@@ -93,7 +94,7 @@ const StyledXmark = styled(FaXmark)`
     cursor: pointer;
 `;
 
-const ExpenseForm = ({ onClose }) => {
+const ExpenseForm = (props) => {
     const [accounts, setAccounts] = useState([]);
     const amountInput = useRef(null);
     useEffect(() => {
@@ -106,6 +107,18 @@ const ExpenseForm = ({ onClose }) => {
             }
         };
         fetchAccounts();
+        if (props.recordId) {
+            const fetchRecord = async () => {
+                const response = await fetch(`api/expenses/${props.recordId}`);
+                const json = await response.json();
+                if (response.ok) {
+                    json.date = json.date.substr(0, 10);
+                    json.time = json.time.substr(0, 5);
+                    setFormData(json);
+                }
+            };
+            fetchRecord();
+        }
     }, []);
     const [formData, setFormData] = useState({
         account: '',
@@ -133,28 +146,34 @@ const ExpenseForm = ({ onClose }) => {
                 'Content-Type': 'application/json',
             },
         });
-        if (!response.ok) {
+        if (response.ok) {
+            setFormData(emptyExpenseData);
+            props.onClose();
+        } else {
             console.log('error submiting the expense');
         }
+    };
+    const handleUpdate = async (ev) => {
+        ev.preventDefault();
+        const response = await fetch(`api/expenses/${props.recordId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(formData),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
         if (response.ok) {
-            setFormData({
-                account: '',
-                amount: '',
-                category: '',
-                description: '',
-                date: '',
-                time: '',
-                paymentType: '',
-                status: '',
-                invoice: '',
-            });
+            setFormData(emptyExpenseData);
+            props.onClose();
+        } else {
+            console.log('error updating the expense');
         }
     };
     return (
         <>
             <ModalWrapper>
                 <ModalContainer>
-                    <StyledXmark onClick={onClose} />
+                    <StyledXmark onClick={props.onClose} />
                     <form method="post">
                         <div className="d-flex justify-content-center align-items-center">
                             <span className="bigText">+</span>{' '}
@@ -297,10 +316,24 @@ const ExpenseForm = ({ onClose }) => {
                             </div>
                         </div>
                         <div className="d-flex justify-content-center mt-4">
-                            <button type="submit" className="submitBtn me-3" onClick={handleSubmit}>
-                                Confirm
-                            </button>
-                            <button className="cancelBtn" onClick={onClose}>
+                            {props.formType === 'Update' ? (
+                                <button
+                                    type="submit"
+                                    className="submitBtn me-3"
+                                    onClick={handleUpdate}
+                                >
+                                    Update
+                                </button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className="submitBtn me-3"
+                                    onClick={handleSubmit}
+                                >
+                                    Confirm
+                                </button>
+                            )}
+                            <button className="cancelBtn" onClick={props.onClose}>
                                 Cancel
                             </button>
                         </div>
