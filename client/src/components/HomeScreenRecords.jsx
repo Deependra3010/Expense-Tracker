@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HomeScreenRecord from './HomeScreenRecord';
+import { useExpensesContext } from '../hooks/useExpensesContext';
 
 const RecordsHeading = styled.span`
     color: #222;
@@ -13,24 +14,15 @@ const LightText = styled(Link)`
 `;
 
 const HomeScreenRecords = () => {
-    const [records, setRecords] = useState([]);
-    useEffect(() => {
-        const fetchRecords = async () => {
-            const response = await fetch('/api/expenses');
-            const json = await response.json();
-            if (response.ok) {
-                setRecords(json);
-            }
-        };
-        fetchRecords();
-    }, []);
+    const { expenses } = useExpensesContext();
+
     return (
         <>
             <div className="d-flex justify-content-between mt-md-4 px-3 mb-3">
                 <RecordsHeading>Transaction History</RecordsHeading>
                 <LightText to="/records">See all</LightText>
             </div>
-            {records
+            {expenses
                 .slice(-7)
                 .reverse()
                 .map((record) => (
