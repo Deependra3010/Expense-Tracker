@@ -63,8 +63,10 @@ export async function addExpense(data) {
     });
     if (!response.ok) {
         console.log('error submiting the expense');
+        return;
     }
-    return response.ok;
+    const json = await response.json();
+    return json;
 }
 
 export async function updateExpense(data, id) {

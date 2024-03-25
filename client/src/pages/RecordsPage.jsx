@@ -1,23 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import Record from '../components/Record';
+import { useExpensesContext } from '../hooks/useExpensesContext';
 
 const Records = styled.div`
     padding-top: 50px;
 `;
 
 const RecordsPage = () => {
-    const [records, setRecords] = useState([]);
+    const { records, dispatch } = useExpensesContext();
     useEffect(() => {
         const fetchRecords = async () => {
             const response = await fetch('/api/expenses');
             const json = await response.json();
             if (response.ok) {
-                setRecords(json);
+                debugger;
+                dispatch({ type: 'GET_EXPENSES', payload: json });
             }
         };
         fetchRecords();
     }, []);
+    debugger;
     return (
         <>
             <Records className="container">

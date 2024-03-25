@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FaCirclePlus, FaXmark } from 'react-icons/fa6';
+import { useExpensesContext } from '../hooks/useExpensesContext';
 import {
     addExpense,
     categories,
@@ -96,6 +97,7 @@ const StyledXmark = styled(FaXmark)`
 `;
 
 const ExpenseForm = (props) => {
+    const { dispatch } = useExpensesContext();
     const [accounts, setAccounts] = useState([]);
     const amountInput = useRef(null);
     useEffect(() => {
@@ -113,8 +115,6 @@ const ExpenseForm = (props) => {
                 const response = await fetch(`api/expenses/${props.recordId}`);
                 const json = await response.json();
                 if (response.ok) {
-                    console.log(json);
-                    debugger;
                     json.date = json.date.substr(0, 10);
                     json.time = json.time.substr(0, 5);
                     setFormData(json);
@@ -140,9 +140,10 @@ const ExpenseForm = (props) => {
     };
     const handleSubmit = async (ev) => {
         ev.preventDefault();
-        const success = await addExpense(formData);
-        if (success) {
+        const json = await addExpense(formData);
+        if (json) {
             setFormData(emptyExpenseData);
+            dispatch({ type: 'ADD_EXPENSE', payload: json });
             props.onClose();
         }
     };

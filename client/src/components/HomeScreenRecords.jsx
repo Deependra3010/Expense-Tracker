@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import HomeScreenRecord from './HomeScreenRecord';
+import { useExpensesContext } from '../hooks/useExpensesContext';
 
 const RecordsHeading = styled.span`
     color: #222;
@@ -13,17 +14,19 @@ const LightText = styled(Link)`
 `;
 
 const HomeScreenRecords = () => {
-    const [records, setRecords] = useState([]);
+    const { records, dispatch } = useExpensesContext();
     useEffect(() => {
         const fetchRecords = async () => {
             const response = await fetch('/api/expenses');
             const json = await response.json();
             if (response.ok) {
-                setRecords(json);
+                debugger;
+                dispatch({ type: 'GET_EXPENSES', payload: json });
             }
         };
         fetchRecords();
     }, []);
+    debugger;
     return (
         <>
             <div className="d-flex justify-content-between mt-md-4 px-3 mb-3">
