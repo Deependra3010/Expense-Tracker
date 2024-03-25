@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FaCirclePlus, FaXmark } from 'react-icons/fa6';
+import { useExpensesContext } from '../hooks/useExpensesContext';
 import {
     categories,
     emptyExpenseData,
@@ -95,6 +96,7 @@ const StyledXmark = styled(FaXmark)`
 `;
 
 const ExpenseForm = (props) => {
+    const { dispatch } = useExpensesContext();
     const [accounts, setAccounts] = useState([]);
     const amountInput = useRef(null);
     useEffect(() => {
@@ -148,6 +150,7 @@ const ExpenseForm = (props) => {
         });
         if (response.ok) {
             setFormData(emptyExpenseData);
+            dispatch({ type: 'ADD_EXPENSE', payload: json });
             props.onClose();
         } else {
             console.log('error submiting the expense');
@@ -162,7 +165,9 @@ const ExpenseForm = (props) => {
                 'Content-Type': 'application/json',
             },
         });
+        const json = await response.json();
         if (response.ok) {
+            dispatch({ type: 'UPDATE_EXPENSE', payload: json });
             setFormData(emptyExpenseData);
             props.onClose();
         } else {
