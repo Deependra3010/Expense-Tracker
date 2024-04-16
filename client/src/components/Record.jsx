@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { FaEllipsisVertical } from 'react-icons/fa6';
+import { FaTrash } from 'react-icons/fa6';
 import ExpenseForm from './ExpenseForm';
+import { useExpensesContext } from '../hooks/useExpensesContext';
 
 const RecordContainer = styled.div`
     background-color: #e5e5e5;
@@ -13,10 +14,26 @@ const RecordAmount = styled.div`
 `;
 
 const Record = ({ record }) => {
+    const { dispatch } = useExpensesContext();
     const [showForm, setShowForm] = useState(false);
     const toggleExpenseForm = () => {
         setShowForm(!showForm);
     };
+    const handleDelete = async (ev) => {
+        ev.stopPropagation();
+        const response = await fetch(`api/expenses/${record._id}`, {
+            method: 'delete',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        const json = await response.json();
+        if (response.ok) {
+            dispatch({ type: 'DELETE_EXPENSE', payload: json });
+        } else {
+            console.log('error deleting expense');
+        }
+    }
     return (
         <>
             <RecordContainer
@@ -30,7 +47,7 @@ const Record = ({ record }) => {
                 <RecordAmount className="col-2" $recordCategory={record.category}>
                     {record.category === 'Income' ? '+' : '-'} &#8377; {record.amount}
                 </RecordAmount>
-                <FaEllipsisVertical className="col-1" />
+                <FaTrash className="col-1" onClick={handleDelete}/>
             </RecordContainer>
             {showForm && (
                 <ExpenseForm onClose={toggleExpenseForm} formType="Update" recordId={record._id} />
